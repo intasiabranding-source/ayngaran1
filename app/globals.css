@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-ivory: #FBF8F3;
+  --paper-cream: #FFFDF8;
+  --text-primary: #2B1B17;
+  --text-secondary: #795548;
+  --accent-peach: #F3A79A;
+  --accent-blush: #D9B6A9;
+  --accent-line: #E8E0D8;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  scrollbar-width: thin;
+  scrollbar-color: #D9B6A9 #FBF8F3;
+}
+
+html {
+  scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--bg-ivory);
+  color: var(--text-primary);
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Instant mobile tap responsiveness without 300ms delay */
+button, a, [role="button"], input, select {
+  touch-action: manipulation;
+}
+
+/* GPU Hardware Acceleration for zero-lag smooth rendering */
+.gpu-accelerated,
+section,
+.letter-fold,
+img {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Hardware accelerated smooth image decoding */
+img {
+  content-visibility: auto;
+}
+
+/* Notebook paper faint lines pattern */
+.notebook-lines {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 27px,
+    rgba(232, 224, 216, 0.55) 28px
+  );
+  background-size: 100% 28px;
+}
+
+/* Subtle physical paper grain effect via SVG data-uri */
+.paper-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* Subtle vignette around page */
+.vignette {
+  background: radial-gradient(
+    circle at 50% 45%,
+    transparent 45%,
+    rgba(43, 27, 23, 0.04) 75%,
+    rgba(43, 27, 23, 0.09) 100%
+  );
+}
+
+/* Realistic physical letter crease / fold shadows */
+.letter-fold {
+  position: relative;
+}
+.letter-fold::before {
+  content: "";
+  position: absolute;
+  top: 33.33%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(43, 27, 23, 0.07) 15%,
+    rgba(255, 255, 255, 0.6) 20%,
+    rgba(43, 27, 23, 0.07) 85%,
+    transparent
+  );
+  pointer-events: none;
+}
+.letter-fold::after {
+  content: "";
+  position: absolute;
+  top: 66.66%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(43, 27, 23, 0.07) 15%,
+    rgba(255, 255, 255, 0.6) 20%,
+    rgba(43, 27, 23, 0.07) 85%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* Custom delicate scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FBF8F3;
+}
+::-webkit-scrollbar-thumb {
+  background: #D9B6A9;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #F3A79A;
+}
+
+/* Subtle glow animations */
+@keyframes kenburns {
+  0% {
+    transform: scale(1.02) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.08) translate(-1%, -1%);
+  }
+  100% {
+    transform: scale(1.02) translate(0, 0);
+  }
+}
+
+.ken-burns {
+  animation: kenburns 24s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Mobile tap target utility */
+.touch-target {
+  min-height: 48px;
+  min-width: 48px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

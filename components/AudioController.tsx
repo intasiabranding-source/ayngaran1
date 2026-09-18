@@ -135,8 +135,6 @@ const AudioController = forwardRef<AudioControllerHandle, AudioControllerProps>(
           loop
           preload="auto"
           playsInline
-          // @ts-expect-error webkit attribute for mobile safari
-          webkit-playsinline="true"
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
         >

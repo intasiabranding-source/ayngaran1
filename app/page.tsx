@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import BackgroundAmbience from "@/components/BackgroundAmbience";
+import AudioController, { AudioControllerHandle } from "@/components/AudioController";
 import Scene1Cover from "@/components/Scene1Cover";
 import Scene2Quiz from "@/components/Scene2Quiz";
 import Scene3Letter from "@/components/Scene3Letter";
@@ -21,14 +22,18 @@ export type StoryScene =
 
 export default function LoveStoryApp() {
   const [currentScene, setCurrentScene] = useState<StoryScene>("cover");
+  const audioControllerRef = useRef<AudioControllerHandle | null>(null);
 
   // Smoothly scroll to top on every scene transition
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentScene]);
 
-  // Transition from Scene 1 to Scene 2
-  const handleBeginStory = () => {
+  // Transition from Scene 1 to Scene 2 + Ensure audio plays
+  const handleBeginStory = async () => {
+    if (audioControllerRef.current) {
+      await audioControllerRef.current.play();
+    }
     setCurrentScene("quiz");
   };
 
@@ -61,6 +66,12 @@ export default function LoveStoryApp() {
     <main className="relative min-h-screen min-h-[100dvh] w-full overflow-x-hidden flex flex-col justify-between">
       {/* Visual Ambiance: Grain, Notebook Lines, Dust Particles, Vignette */}
       <BackgroundAmbience />
+
+      {/* Global Persistent Audio Controller for all Medias (Mobile & Desktop) */}
+      <AudioController
+        ref={audioControllerRef}
+        audioSrc={storyConfig.backgroundMusic || "/audio/background.mp3"}
+      />
 
       {/* Interactive Story Scenes with Cinematic Page Transitions */}
       <div className="relative z-10 flex-grow flex flex-col justify-center">
